@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosError, AxiosResponse } from 'axios'
 import { API_BASE_URL, TIMEOUT, ERROR_MESSAGES } from '@constants/index'
-import { ApiResponse, ApiError } from '@type/index'
+import { ApiResponse, ApiError } from '@/types/index'
 import { logger } from '@utils/logger'
 
 class ApiClient {

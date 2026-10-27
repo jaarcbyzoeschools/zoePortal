@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Navbar } from '@components/common/Navbar'
 import Footer from '@components/common/Footer'
@@ -25,13 +25,6 @@ const ScrollManager: React.FC = () => {
 
 export const PublicLayout: React.FC = () => {
   const { toasts, removeToast } = useToast()
-  const [menuOpen, setMenuOpen] = useState(false)
-  const { pathname } = useLocation()
-
-  // Close the mobile menu whenever the route changes
-  useEffect(() => {
-    setMenuOpen(false)
-  }, [pathname])
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -40,14 +33,13 @@ export const PublicLayout: React.FC = () => {
       {/* Keyboard users can jump past the nav */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg"
       >
         Skip to content
       </a>
 
-      <Navbar onMenuToggle={() => setMenuOpen((open) => !open)} />
+      <Navbar />
 
-      {/* Pages handle their own section padding */}
       <main id="main-content" className="flex-1">
         <Outlet />
       </main>

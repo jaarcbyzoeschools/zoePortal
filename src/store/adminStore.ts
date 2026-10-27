@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Application, AdmissionsStats } from '@type/index'
+import { Application, AdmissionsStats } from '@/types/index'
 import { admissionsService } from '@services/admissions'
 import { logger } from '@utils/logger'
 

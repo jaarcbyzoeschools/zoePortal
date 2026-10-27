@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Dashboard, PortalAccess, Payment } from '@type/index'
+import { Dashboard, PortalAccess, Payment } from '@/types/index'
 import { dashboardService } from '@services/dashboard'
 import { logger } from '@utils/logger'
 

@@ -1,6 +1,6 @@
 import { apiClient } from './api'
-import { Dashboard, PortalAccess } from '@type/index'
-import { ApiResponse } from '@type/index'
+import { Dashboard, PortalAccess } from '@/types/index'
+import { ApiResponse } from '@/types/index'
 
 export const dashboardService = {
   async getCurrentStudentDashboard(

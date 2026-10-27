@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import { apiClient } from '@services/api'
-import { Dashboard } from '@type/index'
+import { Dashboard } from '@/types/index'
 
 export const useDashboard = (year?: number, term?: number) => {
   const [dashboard, setDashboard] = useState<Dashboard | null>(null)

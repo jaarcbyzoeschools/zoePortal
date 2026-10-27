@@ -5,9 +5,6 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-import zoeLogo from "/images/other/logo.png";
-import backpack from "/images/other/bag.png";
-
 interface ContactInfo {
   phones: string[];
 }
@@ -137,7 +134,7 @@ export default function FooterCTA(){
                 "
               >
                 <motion.img
-                  src={backpack}
+                  src="/images/other/bag.png"
                   alt="School Bag"
                   animate={{
                     y: [0, -10, 0],
@@ -172,7 +169,7 @@ export default function FooterCTA(){
         <div className="flex  justify-center mb-12">
   <motion.img
     whileHover={{ scale: 1.05 }}
-    src={zoeLogo}
+    src="/images/other/logo.png"
     alt="Zoe Schools"
     className="w-28"
   />

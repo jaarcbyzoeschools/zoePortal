@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Payment, InitializePaymentResponse } from '@type/index'
+import { Payment, InitializePaymentResponse } from '@/types/index'
 import { paymentService } from '@services/payment'
 import { logger } from '@utils/logger'
 

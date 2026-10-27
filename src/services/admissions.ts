@@ -1,6 +1,6 @@
 import { apiClient } from './api'
-import { Application, AdmissionsStats } from '@type/index'
-import { ApiResponse } from '@type/index'
+import { Application, AdmissionsStats } from '@/types/index'
+import { ApiResponse } from '@/types/index'
 
 export const admissionsService = {
   async getApplications(

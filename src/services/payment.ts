@@ -1,6 +1,6 @@
 import { apiClient } from './api'
-import { Payment, InitializePaymentResponse } from '@type/index'
-import { ApiResponse } from '@type/index'
+import { Payment, InitializePaymentResponse } from '@/types/index'
+import { ApiResponse } from '@/types/index'
 
 export const paymentService = {
   async initializePayment(

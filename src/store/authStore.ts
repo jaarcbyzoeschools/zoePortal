@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { User } from '@type/index'
+import { User } from '@/types/index'
 import { authService } from '@services/auth'
 import { logger } from '@utils/logger'
 

@@ -1,6 +1,6 @@
 import { apiClient } from './api'
-import { AuthResponse, User } from '@type/index'
-import { ApiResponse } from '@type/index'
+import { AuthResponse, User } from '@/types/index'
+import { ApiResponse } from '@/types/index'
 
 
 export const authService = {

@@ -4,8 +4,9 @@ import { SESSION_TIMEOUT, SESSION_WARNING_TIME } from '@constants/index'
 
 export const useSessionTimeout = () => {
   const { isAuthenticated, logout } = useAuth()
-  let timeoutId: NodeJS.Timeout | null = null
-  let warningTimeoutId: NodeJS.Timeout | null = null
+ let timeoutId: ReturnType<typeof setTimeout> | null = null;
+let warningTimeoutId: ReturnType<typeof setTimeout> | null = null;
+
 
   useEffect(() => {
     if (!isAuthenticated) {

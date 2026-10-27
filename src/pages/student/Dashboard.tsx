@@ -8,8 +8,6 @@ import {
   Calendar,
   FileText,
   BarChart3,
-  Lightbulb,
-  RefreshCw
 } from 'lucide-react'
 import { Card } from '@components/common/Card'
 import { Badge } from '@components/common/Badge'
@@ -17,13 +15,11 @@ import { Alert } from '@components/common/Alert'
 import { Button } from '@components/common/Button'
 import { Spinner } from '@components/common/Spinner'
 import { useDashboard } from '@hooks/useDashboard'
-import { useToast } from '@hooks/useToast'
 import { formatCurrency, formatDate } from '@utils/format'
 import { ROUTES } from '@constants/index'
 
 const StudentDashboard: React.FC = () => {
   const navigate = useNavigate()
-  const { error: showError } = useToast()
   const currentYear = new Date().getFullYear()
   const currentTerm = 1
 
