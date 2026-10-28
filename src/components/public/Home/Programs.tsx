@@ -85,7 +85,7 @@ export const Programs: React.FC<ProgramsProps> = ({ programs = defaultPrograms }
               <span className="flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent">
                 <Icon className="h-5 w-5" />
               </span>
-              <h3 className="mt-5 text-sm font-semibold text-gray-900">{title}</h3>
+              <h3 className="mt-4 text-sm font-semibold text-gray-900">{title}</h3>
               <p className="mt-3 text-[13px] leading-relaxed text-gray-600">{description}</p>
             </motion.article>
           ))}
