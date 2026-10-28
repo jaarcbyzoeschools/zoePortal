@@ -43,7 +43,7 @@ export const Navbar: React.FC = () => {
   )
 
   return (
-    <nav className="fixed left-0 right-0 top-0 z-100 bg-[#FDFAFA] py-2">
+    <nav className="fixed left-0 right-0 top-0 z-100 bg-cream py-2">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Desktop: Logo | Centered Nav | Contact Button */}
         <div className="hidden h-16 items-center justify-between gap-8 md:flex">

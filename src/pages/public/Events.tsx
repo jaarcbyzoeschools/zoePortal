@@ -54,7 +54,7 @@ export const Events: React.FC = () => {
         subtitle="Every date that matters for the session: resumptions, exams, open days, competitions and celebrations."
       />
 
-      <section className="bg-white py-14 lg:py-20">
+      <section className="bg-cream py-14 lg:py-20">
         <div className="mx-auto max-w-6xl px-6 md:px-10">
           {upcoming.length > 0 ? (
             <MonthGroups list={upcoming} />

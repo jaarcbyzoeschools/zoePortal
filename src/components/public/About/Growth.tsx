@@ -71,12 +71,16 @@ export const Growth: React.FC<GrowthProps> = ({
     },
   ],
   campuses = [
-    { id: 1, name: 'Citadel of Peace - Isale General, Ogbomoso' },
-    { id: 2, name: 'Citadel of Joy - Orogun, Ogbomoso' },
-    { id: 3, name: 'Citadel of Flourish - Naira Motel, Ogbomoso' },
-    { id: 4, name: 'Citadel of Praise - California Area, Ogbomoso' },
-    { id: 5, name: 'Citadel of Wisdom - Abba, Ogbomoso' },
-    { id: 6, name: 'Citadel of Grace - Irewolede, Ogbomoso' },
+    { id: 1, name: 'Citadel of Peace - Isale General, Ogbomoso.' },
+    { id: 2, name: 'Citadel of Joy — Orogun, Along Iresa Road.' },
+    { id: 3, name: 'Citadel of Flourish — Oke Alapata Road, Ogbomoso.' },
+    { id: 4, name: 'Citadel of Glory 1 — Mooro, Iresa Road.' },
+    { id: 5, name: 'Citadel of Wisdom — Abba, Ilorin Road.' },
+    { id: 6, name: 'Citadel of Grace — Irewolede Estate, Iresa Rd.' },
+    { id: 7, name: 'Citadel of Praise — California Area, Ogbomoso.' },
+    { id: 8, name: 'Citadel of Glory 2 — Mooro, Iresa Road' },
+
+
   ],
   historyTitle = 'Where it all Began',
   historyText = `Zoe Schools Ogbomoso was founded on September 13, 2004, with a bold vision and humble beginnings. Starting with just 15 students and 8 dedicated teachers in a rented space at Isale General, Ogbomoso, the school was initially met with skepticism. The caretaker of the property even reported the school to the Ministry of Education, claiming the founders were defrauding parents by using the name "Zoe Group of Schools" without substantial enrollment.
@@ -136,7 +140,7 @@ This remarkable growth is a testament to our unwavering commitment to quality ed
 
   return (
     // overflow-x-clip (not overflow-hidden) so sticky still works inside
-    <section className="relative py-16 lg:py-24 bg-white overflow-x-clip">
+    <section className="relative py-8 lg:py-10 bg-cream overflow-x-clip">
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-40 h-40 bg-green-100 rounded-full blur-3xl opacity-20 -z-10" />
       <div className="absolute bottom-0 left-0 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-20 -z-10" />
@@ -153,9 +157,9 @@ This remarkable growth is a testament to our unwavering commitment to quality ed
           {/* Left Side - History (sticky on desktop) */}
           <motion.div
             variants={itemVariants}
-            className="lg:sticky lg:top-28 lg:self-start"
+            className="lg:sticky  lg:top-28 lg:self-start"
           >
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+            <h2 className="text-4xl font-serif lg:text-5xl font-bold mb-6 leading-tight">
               {historyTitle.split(' ').map((word, index) => (
                 <span key={index}>
                   {word === 'Began' ? (
@@ -235,26 +239,19 @@ This remarkable growth is a testament to our unwavering commitment to quality ed
                       ))}
                     </ul>
                   </div>
+
+                 
                 </motion.div>
               ))}
+               
             </div>
-          </motion.div>
-        </motion.div>
+            <div className='bg-white p-6 rounded-[10px] mt-4 '>
+                                <div className='font-bold text-2xl'>Our Campuses</div>
 
-        {/* Campuses Section */}
-        <motion.div
-          className="bg-gray-50 rounded-[30px] p-8 lg:p-12"
-          variants={itemVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-8">
-            Our Campuses
-          </h3>
 
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6"
+
+                                  <motion.div
+            className="gap-4 lg:gap-6"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -264,14 +261,19 @@ This remarkable growth is a testament to our unwavering commitment to quality ed
               <motion.div
                 key={campus.id}
                 variants={campusItemVariants}
-                className="flex items-start gap-3 p-4 bg-white rounded-[15px] border-l-4 border-[#02BB22] hover:shadow-md transition-shadow duration-300"
+                className="flex items-start gap-3 py-2 bg-white rounded-[15px]   transition-shadow duration-300"
               >
-                <div className="shrink-0 w-5 h-5 rounded-full bg-[#02BB22] mt-1" />
+                
                 <p className="text-gray-700 text-sm lg:text-base">{campus.name}</p>
               </motion.div>
             ))}
+          </motion.div> 
+                  </div>
           </motion.div>
+          
         </motion.div>
+
+        
       </div>
     </section>
   )

@@ -90,7 +90,7 @@ export const NewsEvents: React.FC<NewsEventsProps> = ({
   }
 
   return (
-    <section className="relative py-16 lg:py-24 bg-white overflow-hidden">
+    <section className="relative py-16 lg:py-24 bg-cream overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-40 h-40 bg-green-100 rounded-full blur-3xl opacity-20 -z-10" />
       <div className="absolute bottom-0 right-1/4 w-32 h-32 bg-blue-100 rounded-full blur-3xl opacity-20 -z-10" />
@@ -107,9 +107,9 @@ export const NewsEvents: React.FC<NewsEventsProps> = ({
           {/* Heading */}
           <motion.h2
             variants={headerVariants}
-            className="text-4xl lg:text-5xl font-bold mb-4"
+            className="text-4xl lg:text-5xl font-serif font-bold mb-4"
           >
-            Trending <span className="text-[#02BB22]">News & Events</span>
+            Trending <span className="text-[#02BB22] italic">Blogs</span>
           </motion.h2>
 
           {/* Subtitle */}

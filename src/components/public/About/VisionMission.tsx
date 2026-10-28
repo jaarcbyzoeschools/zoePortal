@@ -71,7 +71,7 @@ export const VisionMission: React.FC<VisionMissionProps> = ({
   }
 
   return (
-    <section className="relative py-16 lg:py-24 bg-white overflow-hidden">
+    <section className="relative py-5 lg:py-5 bg-cream overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-40 h-40 bg-red-100 rounded-full blur-3xl opacity-20 -z-10" />
       <div className="absolute bottom-0 right-0 w-40 h-40 bg-green-100 rounded-full blur-3xl opacity-20 -z-10" />
@@ -85,7 +85,7 @@ export const VisionMission: React.FC<VisionMissionProps> = ({
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="text-4xl lg:text-5xl font-serif font-bold mb-4">
             Our{' '}
             <span className="text-[#02BB22] italic">Vision & Mission</span>
           </h2>
@@ -122,7 +122,7 @@ export const VisionMission: React.FC<VisionMissionProps> = ({
             </motion.div>
 
             {/* Label */}
-            <p className="text-[#02BB22] text-xs font-bold tracking-widest uppercase mb-4">
+            <p className="text-[#02BB22] text-xs font-bold  tracking-widest uppercase mb-4">
               Our Vision
             </p>
 

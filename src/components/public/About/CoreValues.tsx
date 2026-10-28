@@ -138,7 +138,7 @@ export const CoreValues: React.FC<CoreValuesProps> = ({
   }
 
   return (
-    <section className="relative py-16 lg:py-24 bg-white overflow-hidden">
+    <section className="relative py-16 lg:py-24 bg-cream overflow-hidden">
 
         
              <div className='absolute left-[-180px]  top-58 w-90'>
@@ -162,8 +162,8 @@ export const CoreValues: React.FC<CoreValuesProps> = ({
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
-            Our <span className="text-[#02BB22] italic">Core Value</span>
+          <h2 className="text-4xl lg:text-5xl font-bold font-serif mb-4">
+            Our <span className="text-[#02BB22] italic ">Core Value</span>
           </h2>
           <div className="flex justify-center">
             <div className="w-16 h-1 bg-[#02BB22]"></div>

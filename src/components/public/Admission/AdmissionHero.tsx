@@ -40,7 +40,7 @@ const staggerContainer = {
 
 export default function AdmissionHero(){
   return (
-    <section className="relative overflow-hidden bg-[#FDFAFA]">
+    <section className="relative overflow-hidden bg-cream pt-20">
       <div className="max-w-6xl mx-auto px-6 lg:px-12 pt-10 lg:pt-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* LEFT CONTENT */}

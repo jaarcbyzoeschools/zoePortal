@@ -152,12 +152,12 @@ export const CampusGallery: React.FC<CampusGalleryProps> = ({
   }
 
   return (
-    <section className="relative py-12 lg:mx-14 mx-6 bg-white overflow-hidden">
+    <section className="relative py-12   bg-cream overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-20 -z-10" />
       <div className="absolute bottom-0 left-0 w-40 h-40 bg-green-100 rounded-full blur-3xl opacity-20 -z-10" />
 
-      <div className="max-w-7xl mx-auto px-4 lg:px-6">
+      <div className="max-w-6xl mx-auto px-4 lg:px-6">
         {/* Header */}
         <motion.div
           className="text-center mb-12 lg:mb-16"
@@ -182,7 +182,7 @@ export const CampusGallery: React.FC<CampusGalleryProps> = ({
           {/* Heading */}
           <motion.h2
             variants={headerVariants}
-            className="text-4xl text-[#820203] lg:text-5xl font-bold mb-4"
+            className="text-4xl font-serif text-[#820203] lg:text-5xl font-bold mb-4"
           >
             Explore Our{' '}
             <span className="text-[#02BB22] italic"><i>Campus Life</i></span>

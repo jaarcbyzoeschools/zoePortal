@@ -85,12 +85,12 @@ export const Management: React.FC<ManagementProps> = ({
   }
 
   return (
-    <section className="relative py-16 lg:py-24 overflow-hidden">
+    <section className="relative py-5 bg-cream   overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-40 h-40 bg-green-100 rounded-full blur-3xl opacity-20 -z-10" />
       <div className="absolute bottom-0 left-0 w-40 h-40 bg-gray-100 rounded-full blur-3xl opacity-20 -z-10" />
 
-      <div className="max-w-7xl mx-auto px-4 lg:px-6">
+      <div className="max-w-6xl mx-auto px-4 lg:px-6">
         {/* Header */}
         <motion.div
           className="mb-12 lg:mb-16 flex justify-between items-start"
@@ -100,8 +100,8 @@ export const Management: React.FC<ManagementProps> = ({
           viewport={{ once: true, amount: 0.3 }}
         >
           <div>
-            <h2 className="text-4xl lg:text-5xl font-bold mb-4">
-              Our <span className="text-[#02BB22] italic">Management</span>
+            <h2 className="text-4xl lg:text-5xl font-serif font-bold mb-4">
+              Our <span className="text-[#02BB22] italic ">Management</span>
             </h2>
             <p className="text-gray-600 text-base lg:text-lg max-w-[400px]">
               {subtitle}

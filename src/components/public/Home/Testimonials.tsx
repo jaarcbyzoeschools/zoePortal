@@ -1,277 +1,146 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation } from 'swiper/modules'
+import type { Swiper as SwiperType } from 'swiper'
 import { motion } from 'framer-motion'
-import { ChevronLeft, ChevronRight, Quote, MapPin, Star } from 'lucide-react'
-import { Variants } from 'framer-motion'
+import { ArrowLeft, ArrowRight, MapPin, MessageCircle, Star } from 'lucide-react'
+import { cldPhoto } from '@/lib/cloudinary'
+import { testimonials as defaultTestimonials, type Testimonial } from '@/data/testimonials.data'
 import 'swiper/css'
-import 'swiper/css/navigation'
-
-interface Testimonial {
-  id: number
-  parentName: string
-  rating: number
-  text: string
-  location: string
-}
 
 interface TestimonialsProps {
   testimonials?: Testimonial[]
 }
 
+const navButton = (enabled: boolean) =>
+  `flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${
+    enabled
+      ? 'border-transparent bg-linear-to-br from-accent to-[#5c0f0f] text-white shadow-lg hover:scale-105'
+      : 'cursor-not-allowed border-white/30 bg-white/10 text-white/60'
+  }`
+
 export const Testimonials: React.FC<TestimonialsProps> = ({
-  testimonials = [
-    {
-      id: 1,
-      parentName: 'Courtney Henry',
-      rating: 5,
-      text: 'My child has become more confident and active since joining this school. The teachers genuinely care about each student.',
-      location: 'Doha, Qatar',
-    },
-    {
-      id: 2,
-      parentName: 'Courtney Henry',
-      rating: 5,
-      text: 'My child has become more confident and active since joining this school. The teachers genuinely care about each student.',
-      location: 'Doha, Qatar',
-    },
-    {
-      id: 3,
-      parentName: 'Courtney Henry',
-      rating: 5,
-      text: 'My child has become more confident and active since joining this school. The teachers genuinely care about each student.',
-      location: 'Doha, Qatar',
-    },
-    {
-      id: 4,
-      parentName: 'Courtney Henry',
-      rating: 5,
-      text: 'My child has become more confident and active since joining this school. The teachers genuinely care about each student.',
-      location: 'Doha, Qatar',
-    },
-  ],
+  testimonials = defaultTestimonials,
 }) => {
-  const swiperRef = useRef<any>(null)
-  const [activeSlide, setActiveSlide] = useState(0)
+  const [swiper, setSwiper] = useState<SwiperType | null>(null)
+  const [edges, setEdges] = useState({ start: true, end: false })
 
-  // Animation variants
-  const headerVariants:Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-      },
-    },
-  }
+  const sync = (s: SwiperType) =>
+    setEdges((prev) =>
+      prev.start === s.isBeginning && prev.end === s.isEnd
+        ? prev
+        : { start: s.isBeginning, end: s.isEnd },
+    )
 
-  const badgeVariants:Variants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut',
-      },
-    },
-  }
-
-  const cardVariants:Variants = {
-    hidden: { opacity: 0, x: 50 },
-    visible: (index: number) => ({
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-        delay: index * 0.1,
-      },
-    }),
-  }
-
-  const navigationVariants:Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-        delay: 0.4,
-      },
-    },
-  }
+  // Hide the arrows when every testimonial already fits on screen
+  const canScroll = !(edges.start && edges.end)
 
   return (
-    <section className="relative py-16 lg:py-24 overflow-hidden rounded-3xl mx-6 lg:mx-20">
-      {/* Gradient background - Brown to Green */}
-      <div
-        className="absolute inset-0 rounded-3xl"
-        style={{
-          background:
-            'linear-gradient(135deg, #820203 0%, #043D2A 100%)',
-        }}
-      />
-
-      {/* Content wrapper */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 lg:px-8">
+    <section className="px-4 sm:px-6 md:px-10 bg-cream">
+      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl bg-linear-to-br from-[#6e1212] via-[#4a1c16] to-[#14442b] px-4 py-14 sm:px-8 lg:py-16">
         {/* Header */}
         <motion.div
-          className="text-center mb-12 lg:mb-16"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          className="text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
         >
-          {/* Badge */}
-          <motion.div
-            variants={badgeVariants}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full mb-6"
-          >
-            <Quote className="w-4 h-4 text-gray-800" />
-            <span className="text-sm font-medium text-gray-800">
-              Testimonial
-            </span>
-          </motion.div>
-
-          {/* Heading */}
-          <motion.h2
-            variants={headerVariants}
-            className="text-3xl lg:text-4xl font-bold text-white mb-2"
-          >
-            What{' '}
-            <span className="font-extrabold">Student's Parents Say</span> About
-            Us
-          </motion.h2>
+          <span className="inline-block rounded-full bg-white/15 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
+            Testimonials
+          </span>
+          <h2 className="mt-5 font-serif text-3xl font-semibold text-white sm:text-4xl">
+            What <span className="italic text-[#02BB22]">Parents Say</span> About Us
+          </h2>
+          <div className="mx-auto mt-4 h-0.5 w-12 bg-[#02BB22]" />
         </motion.div>
 
-        {/* Testimonials Carousel */}
+        {/* Carousel */}
         <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={{
-            visible: {
-              transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.2,
-              },
-            },
-          }}
-          className="mb-8"
+          className="mt-10 lg:mt-12"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
         >
           <Swiper
-            ref={swiperRef}
-            modules={[Navigation]}
-            spaceBetween={20}
+            onSwiper={(s) => {
+              setSwiper(s)
+              sync(s)
+            }}
+            onSlideChange={sync}
+            onBreakpoint={sync}
+            onResize={sync}
+            spaceBetween={16}
             slidesPerView={1}
             breakpoints={{
-              768: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              1024: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-              },
+              768: { slidesPerView: 2, spaceBetween: 20 },
+              1024: { slidesPerView: 3, spaceBetween: 20 },
             }}
-            onSlideChange={(swiper) => setActiveSlide(swiper.activeIndex)}
-            className="testimonials-swiper"
           >
-            {testimonials.map((testimonial, index) => (
-              <SwiperSlide key={testimonial.id}>
-                <motion.div
-                  variants={cardVariants}
-                  custom={index}
-                  className="h-full"
-                >
-                  <div
-                    className="h-full rounded-[20px] p-6 lg:p-8 text-white flex flex-col justify-between"
-                    style={{
-                      backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                      backdropFilter: 'blur(10px)',
-                      WebkitBackdropFilter: 'blur(10px)',
-                      border: '1.5px solid rgba(255, 255, 255, 0.2)',
-                    }}
-                  >
-                    {/* Top Content */}
-                    <div className="flex-1">
-                      {/* Parent Name */}
-                      <h3 className="text-lg font-bold mb-2">
-                        {testimonial.parentName}
-                      </h3>
-
-                      {/* Stars */}
-                      <div className="flex gap-1 mb-4">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className="w-4 h-4 fill-yellow-400 text-yellow-400"
-                          />
-                        ))}
+            {testimonials.map((t) => {
+              const photo = t.photo ? cldPhoto(t.photo, { width: 96, ratio: '1:1' }) : ''
+              return (
+                <SwiperSlide key={t.id} className="h-auto!">
+                  <article className="flex h-full flex-col rounded-2xl border border-white/20 bg-white/10 p-5 text-white backdrop-blur-md">
+                    <div className="flex items-center gap-3">
+                      <span className="h-11 w-11 shrink-0 overflow-hidden rounded-full bg-[#f6e7e7]">
+                        {photo && <img src={photo} alt="" className="h-full w-full object-cover" />}
+                      </span>
+                      <div>
+                        <h3 className="text-sm font-semibold">{t.name}</h3>
+                        <div
+                          role="img"
+                          aria-label={`${t.rating} out of 5 stars`}
+                          className="mt-1 flex gap-0.5"
+                        >
+                          {Array.from({ length: t.rating }).map((_, i) => (
+                            <Star key={i} className="h-3 w-3 fill-[#f5b82e] text-[#f5b82e]" />
+                          ))}
+                        </div>
                       </div>
-
-                      {/* Testimonial Text */}
-                      <p className="text-sm lg:text-base leading-relaxed text-white text-opacity-90 mb-4">
-                        "{testimonial.text}"
-                      </p>
                     </div>
 
-                    {/* Bottom - Location & Quote Icon */}
-                    <div className="flex items-end justify-between pt-4 border-t border-white border-opacity-20">
-                      {/* Location */}
-                      <div className="flex items-center gap-2">
-                        <div className='w-4 h-[1px] bg-white '></div>
-                        <MapPin className="w-4 h-4 text-white text-opacity-70 ml-[-6px]" />
-                        <span className="text-xs lg:text-sm text-white text-opacity-80">
-                           {testimonial.location}
-                        </span>
-                      </div>
+                    <p className="mt-4 flex-1 text-[13px] leading-relaxed text-white/90">
+                      “{t.text}”
+                    </p>
 
-                      {/* Quote Icon */}
-                      <Quote className="w-6 h-6 text-white text-opacity-30" />
+                    <div className="mt-4 flex items-center justify-between text-[11px] text-white/70">
+                      <span className="flex items-center gap-1.5">
+                        <MapPin className="h-3.5 w-3.5" />
+                        {t.role} · {t.location}
+                      </span>
+                      <MessageCircle className="h-4 w-4 text-white/60" aria-hidden="true" />
                     </div>
-                  </div>
-                </motion.div>
-              </SwiperSlide>
-            ))}
+                  </article>
+                </SwiperSlide>
+              )
+            })}
           </Swiper>
         </motion.div>
 
-        {/* Navigation & Pagination */}
-        <motion.div
-          variants={navigationVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          className="flex items-center justify-center gap-6"
-        >
-          {/* Previous Button */}
-          <button
-            onClick={() => swiperRef.current?.swiper.slidePrev()}
-            className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-white text-white hover:bg-white hover:text-[#451F17] transition-all duration-300"
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-
-          {/* Pagination */}
-          <div className="text-white text-sm font-medium">
-            {String(activeSlide + 1).padStart(2, '0')} /{' '}
-            {String(testimonials.length).padStart(2, '0')}
+        {/* Arrows */}
+        {canScroll && (
+          <div className="mt-8 flex items-center justify-center gap-3">
+            <button
+              type="button"
+              aria-label="Previous testimonials"
+              disabled={edges.start}
+              onClick={() => swiper?.slidePrev()}
+              className={navButton(!edges.start)}
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              aria-label="Next testimonials"
+              disabled={edges.end}
+              onClick={() => swiper?.slideNext()}
+              className={navButton(!edges.end)}
+            >
+              <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
-
-          {/* Next Button */}
-          <button
-            onClick={() => swiperRef.current?.swiper.slideNext()}
-            className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-white text-white hover:bg-white hover:text-[#451F17] transition-all duration-300"
-            aria-label="Next testimonial"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </motion.div>
+        )}
       </div>
     </section>
   )

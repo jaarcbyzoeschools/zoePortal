@@ -83,7 +83,7 @@ const cardVariants = {
 
 export default function Campuses(){
   return (
-    <section className="py-20">
+    <section className="py-20 bg-cream">
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         <motion.div
           initial={{

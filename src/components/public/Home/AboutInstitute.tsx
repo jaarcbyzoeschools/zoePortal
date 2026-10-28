@@ -125,27 +125,18 @@ export const AboutInstitute: React.FC<AboutInstituteProps> = ({
   ]
 
  return (
-    <section className="relative py-6 lg:py-6 rounded-[30px] bg-gray-50 overflow-hidden">
+    <section className="relative py-6  bg-cream   overflow-hidden">
       {/* Decorative dots pattern - top left */}
              <div className='absolute right-[-160px] bottom-[-160px] w-90'>
             <img src='/images/other/star.png' alt='star' />
           </div>
-      <div className="absolute top-0 left-0 pointer-events-none">
-        <div className="grid grid-cols-6 gap-3">
-          {[...Array(28)].map((_, i) => (
-            <div
-              key={i}
-              className="w-2 h-2 bg-gray-300 rounded-full opacity-40"
-            />
-          ))}
-        </div>
-      </div>
+   
  
       {/* Decorative elements */}
       <div className="absolute top-20 right-0 w-48 h-48  bg-green-50 rounded-full blur-3xl opacity-30 -z-10" />
       <div className="absolute bottom-0 left-1/4 w-32 h-32 bg-gray-100 rounded-full blur-3xl opacity-20 -z-10" />
  
-      <div className="px-2 max-w-7xl md:mx-6 mx-2 px-4  lg:px-6">
+      <div className="px-2 max-w-6xl bg-white rounded-[30px]  mx-auto mx-2 p-4  lg:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left - Image Gallery with gray background */}
           <motion.div
@@ -169,7 +160,7 @@ export const AboutInstitute: React.FC<AboutInstituteProps> = ({
             </motion.div>
  
             {/* Thumbnail Images - Overlapping */}
-            <div className="flex gap-4 -mt-12 mx-4 relative z-10">
+            <div className="flex gap-4  mx-4 relative z-10">
               {thumbnails.map((thumbnail) => (
                 <motion.button
                   key={thumbnail.id}
@@ -201,7 +192,7 @@ export const AboutInstitute: React.FC<AboutInstituteProps> = ({
  
           {/* Right - Content */}
           <motion.div
-            className="flex flex-col"
+            className="flex flex-col px-4"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -209,8 +200,8 @@ export const AboutInstitute: React.FC<AboutInstituteProps> = ({
           >
             {/* Heading */}
             <motion.div variants={textFadeInVariants} className="mb-6">
-              <h2 className="text-4xl lg:text-5xl font-bold mb-2">
-                About <span className="text-[#02BB22]">Our Institute</span>
+              <h2 className="text-4xl font-serif lg:text-5xl font-bold mb-2">
+                About <span className="text-[#02BB22] italic">Our Institute</span>
               </h2>
             </motion.div>
  
@@ -238,8 +229,8 @@ export const AboutInstitute: React.FC<AboutInstituteProps> = ({
                   transition={{ delay: index * 0.1 }}
                   className="flex items-center gap-3"
                 >
-                  <div className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full border-2 border-[#02BB22] bg-white">
-                    <Check className="w-4 h-4 text-[#02BB22]" />
+                  <div className="flex-shrink-0 flex items-center justify-center w-5 h-5 rounded-full border-2 border-[#8C1414] bg-white">
+                    <Check className="w-3 h-3 text-[#8C1414]" />
                   </div>
                   <span className="text-gray-700 font-medium">{feature}</span>
                 </motion.div>

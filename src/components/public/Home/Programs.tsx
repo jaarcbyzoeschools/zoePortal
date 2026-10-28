@@ -1,259 +1,98 @@
-import React, { useRef } from 'react'
-import { Variants } from 'framer-motion'
-import {
-  motion,
-  useScroll,
-  useTransform,
-} from 'framer-motion'
-import {
-  Building2,
-  BookOpen,
-  Cpu,
-  Trophy,
-} from 'lucide-react'
+import React from 'react'
+import { motion, MotionConfig, type Variants } from 'framer-motion'
+import { Cpu, GraduationCap, House, BookOpen, Trophy, type LucideIcon } from 'lucide-react'
+import { SectionHeading } from '@/components/common/SectionHeading'
 
 interface Program {
   id: number
   title: string
   description: string
-  icon: React.ReactNode
-  color: string
+  icon: LucideIcon
 }
 
 interface ProgramsProps {
   programs?: Program[]
 }
 
-export const Programs: React.FC<ProgramsProps> = ({
-  programs = [
-    {
-      id: 1,
-      title: 'Creche & Kg',
-      description:
-        'Early learning lays the foundation. Our Creche & Kg programs create a fun, secure where children play, explore, and grow.',
-      icon: <Building2 className="w-8 h-8" />,
-      color: '#8B0000',
-    },
-    {
-      id: 2,
-      title: 'Nursery Primary School',
-      description:
-        'Learning is an adventure at our combined education at Zoe combines academics with creative discovery, technology, and more.',
-      icon: <BookOpen className="w-8 h-8" />,
-      color: '#451F17',
-    },
-    {
-      id: 3,
-      title: 'High School',
-      description:
-        'High school doesn\'t just teach subjects—we develop the leaders of tomorrow, with emphasis on excellence and character development.',
-      icon: <Building2 className="w-8 h-8" />,
-      color: '#02BB22',
-    },
-    {
-      id: 4,
-      title: 'Digital Learning',
-      description:
-        'From today\'s digital world. Coding, robotics, artificial intelligence, and computational thinking—preparing students for tomorrow.',
-      icon: <Cpu className="w-8 h-8" />,
-      color: '#2c5aa0',
-    },
-    {
-      id: 5,
-      title: 'Extra-Curricular Activities',
-      description:
-        'Finding their talents through sports, arts, and competitions. Enrichment activities build confident, well-rounded students.',
-      icon: <Trophy className="w-8 h-8" />,
-      color: '#f39c12',
-    },
-  ],
-}) => {
-  const sectionRef = useRef(null)
-  const { scrollY } = useScroll()
+const defaultPrograms: Program[] = [
+  {
+    id: 1,
+    title: 'Creche & KG',
+    description: 'Early learning, big dreams — a joyful space where young learners play, explore and grow.',
+    icon: House,
+  },
+  {
+    id: 2,
+    title: 'Nursery & Primary',
+    description: 'Strong foundations through creative discovery, technology and hands-on experiences.',
+    icon: BookOpen,
+  },
+  {
+    id: 3,
+    title: 'High School',
+    description: 'Preparing for life after school with academic excellence and real-world skills.',
+    icon: GraduationCap,
+  },
+  {
+    id: 4,
+    title: 'Digital Learning',
+    description: 'Coding, robotics, AI and cybersecurity — creators of technology, not just users.',
+    icon: Cpu,
+  },
+  {
+    id: 5,
+    title: 'Extra-Curricular',
+    description: 'Sports, arts, clubs and competitions where students discover talents and build community.',
+    icon: Trophy,
+  },
+]
 
-  // Parallax effect for cards
-  const y = useTransform(scrollY, [0, 300], [0, 50])
+const container: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
+}
 
-  // Container animation with stagger
-  const containerVariants:Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  }
+const card: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+}
 
-  // Section title animation
-  const titleVariants:Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-      },
-    },
-  }
+export const Programs: React.FC<ProgramsProps> = ({ programs = defaultPrograms }) => (
+  <MotionConfig reducedMotion="user">
+    <section className="bg-cream py-5">
+      <div className="mx-auto max-w-6xl px-6 md:px-10">
+        <SectionHeading
+          title="Our"
+          highlight="Programs"
+          subtitle="Discover our comprehensive educational programs designed to nurture every aspect of student development."
+        />
 
-  // Subtitle animation
-  const subtitleVariants:Variants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-        delay: 0.1,
-      },
-    },
-  }
-
-  // Card animation
-  const cardVariants:Variants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-      },
-    },
-    hover: {
-      y: -10,
-      boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15)',
-      transition: {
-        duration: 0.3,
-        ease: 'easeOut',
-      },
-    },
-  }
-
-  // Icon animation - rotate on entrance
-  const iconVariants:Variants = {
-    hidden: { opacity: 0, rotate: -90, scale: 0.5 },
-    visible: {
-      opacity: 1,
-      rotate: 0,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-      },
-    },
-  }
-
-
-
-  return (
-    <section
-      ref={sectionRef}
-      className="relative py-16 lg:py-24 bg-white overflow-hidden"
-    >
-        {/* star */}
-          <div className='absolute left-[-30px] top-[-200px] w-90'>
-            <img src='/images/other/star.png' alt='star' />
-          </div>
-                    <div className='absolute right-[-180px] top-60 w-90'>
-            <img src='/images/other/star.png' alt='star' />
-          </div>
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-20 -z-10" />
-      <div className="absolute bottom-0 right-0 w-40 h-40 bg-green-100 rounded-full blur-3xl opacity-20 -z-10" />
-
-      <div className="max-w-7xl md:mx-13 mx-2 px-4  px-4 lg:px-6">
-        {/* Section Header */}
+        {/* Flex + wrap so an odd last card sits centred instead of hanging left */}
         <motion.div
-          className="text-center mb-2 lg:mb-2"
-          variants={containerVariants}
+          className="mt-10 flex flex-wrap justify-center gap-5 lg:mt-14"
+          variants={container}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <motion.h2
-            variants={titleVariants}
-            className="text-4xl lg:text-5xl font-bold mb-4"
-          >
-            Our <span className="text-[#02BB22]"><i>Programs</i></span>
-          </motion.h2>
-
-          <motion.p
-            variants={subtitleVariants}
-            className="text-gray-600 text-lg max-w-3xl mx-auto"
-          >
-            Discover our comprehensive educational programs designed to nurture
-            every aspect of student development.
-          </motion.p>
-        </motion.div>
-{/* Decorative dividers */}
-        <div className="mt-2 lg:mt-2 flex items-center justify-center gap-4">
-          <div className="w-8 h-1 bg-gradient-to-r from-[#02BB22] to-transparent" />
-          <div className="w-2 h-2 bg-[#02BB22] rounded-full" />
-          <div className="w-8 h-1 bg-gradient-to-l from-[#02BB22] to-transparent" />
-        </div>
-
-
-        {/* Programs Grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          style={{ y }}
-        >
-          {programs.map((program) => (
-            <motion.div
-              key={program.id}
-              variants={cardVariants}
-              whileHover="hover"
-              className="flex flex-col items-center text-center p-6 rounded-[25px] border border-gray-100 cursor-pointer transition-all duration-300"
-              style={{
-                background: `radial-gradient(ellipse at top left, ${program.color}08, transparent 60%), white`,
-              }}
+          {programs.map(({ id, title, description, icon: Icon }) => (
+            <motion.article
+              key={id}
+              variants={card}
+              whileHover={{ y: -6 }}
+              className="flex basis-full flex-col items-center rounded-2xl border border-gray-100 bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-lg sm:basis-[calc(50%-0.625rem)] lg:basis-[calc(20%-1rem)]"
             >
-              {/* Icon Container with Pulse */}
-              <motion.div
-                variants={iconVariants}
-                className="mb-4 p-4 rounded-full border-2 flex items-center justify-center"
-                style={{
-                  borderColor: program.color,
-                }}
-              >
-                <motion.div
-                  animate="pulse"
-
-                  className="flex items-center justify-center"
-                  style={{
-                    color: program.color,
-                  }}
-                >
-                  {program.icon}
-                </motion.div>
-              </motion.div>
-
-              {/* Title */}
-              <h3 className="text-lg font-bold text-gray-900 mb-3">
-                {program.title}
-              </h3>
-
-              {/* Description */}
-              <p className="text-sm text-gray-600 w-full leading-relaxed flex-grow">
-                {program.description}
-              </p>
-            </motion.div>
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent">
+                <Icon className="h-5 w-5" />
+              </span>
+              <h3 className="mt-5 text-sm font-semibold text-gray-900">{title}</h3>
+              <p className="mt-3 text-[13px] leading-relaxed text-gray-600">{description}</p>
+            </motion.article>
           ))}
         </motion.div>
-
-        
       </div>
     </section>
-  )
-}
+  </MotionConfig>
+)
 
 export default Programs

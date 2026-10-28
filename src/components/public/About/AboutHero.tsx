@@ -112,7 +112,7 @@ export const AboutHero: React.FC<AboutHeroProps> = ({
   }
 
   return (
-    <section className="relative pt-16 lg:pt-24 pb-12 lg:pb-20 overflow-hidden bg-[#FDFAFA]">
+    <section className="relative pt-16 lg:pt-24 pb-12 lg:pb-10 overflow-hidden bg-[#FDFAFA]">
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-20 -z-10" />
       <div className="absolute bottom-0 right-0 w-40 h-40 bg-green-100 rounded-full blur-3xl opacity-20 -z-10" />

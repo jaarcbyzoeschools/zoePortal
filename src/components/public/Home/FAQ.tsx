@@ -107,7 +107,7 @@ export const FAQ: React.FC<FAQProps> = ({
   }
 
   return (
-    <section className="relative  py-12  bg-gray-100 rounded-[20px] overflow-hidden">
+    <section className="relative  py-12  bg-cream rounded-[20px] overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-40 h-40 bg-green-100 rounded-full blur-3xl opacity-20 -z-10" />
       <div className="absolute bottom-0 left-1/4 w-32 h-32 bg-blue-100 rounded-full blur-3xl opacity-20 -z-10" />

@@ -19,7 +19,7 @@ export const NewsAndEvent: React.FC = () => {
 />
   {/* your filter tabs go here */}
 
-       <section className="bg-white pb-16 lg:pb-24">
+       <section className="bg-cream pb-14 ">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         {featuredArticle && <FeaturedStory article={featuredArticle} />}
         <EventsSection className="mt-16 lg:mt-20" />

@@ -46,7 +46,7 @@ export const NewsSection: React.FC = () => {
   }
 
   return (
-    <section ref={sectionRef} id="latest-news" className="scroll-mt-24 bg-cream py-16 lg:py-24">
+    <section ref={sectionRef} id="latest-news" className="scroll-mt-24 bg-white py-10 lg:py-14">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <SectionHeading
           title="Latest"

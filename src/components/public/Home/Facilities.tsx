@@ -156,7 +156,7 @@ export const Facilities: React.FC<FacilitiesProps> = ({
   }
 
   return (
-    <section className="relative py-16 lg:py-24 overflow-hidden">
+    <section className="relative bg-cream py-16 lg:py-24 overflow-hidden">
       {/* Decorative elements */}
 
              <div className='absolute left-[-180px] top-20 w-90'>
@@ -185,9 +185,9 @@ export const Facilities: React.FC<FacilitiesProps> = ({
           {/* Heading */}
           <motion.h2
             variants={headerVariants}
-            className="text-4xl lg:text-5xl font-bold mb-4"
+            className="text-4xl font-serif  lg:text-5xl font-bold mb-4"
           >
-            Our <span className="text-[#02BB22]"><i>Facilities</i></span>
+            Our <span className="text-[#02BB22] italic"><i>Facilities</i></span>
           </motion.h2>
 
           {/* Underline */}

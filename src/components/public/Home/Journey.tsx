@@ -1,11 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
-import { Variants } from 'framer-motion'
+import {
+  animate,
+  motion,
+  MotionConfig,
+  useInView,
+  useReducedMotion,
+  type Variants,
+} from 'framer-motion'
+import { campuses } from '@/data/campuses.data'
+
+const FOUNDED_YEAR = 2004
 
 interface Stat {
   id: number
   value: number
-  suffix: string
+  suffix?: string
   label: string
 }
 
@@ -14,222 +23,96 @@ interface JourneyProps {
   title?: string
 }
 
-const Counter: React.FC<{ value: number; suffix: string }> = ({
-  value,
-  suffix,
-}) => {
+// Students and staff are typed in by hand. Campuses and years work themselves out.
+const defaultStats: Stat[] = [
+  { id: 1, value: 3000, suffix: '+', label: 'Students' },
+  { id: 2, value: 211, label: 'Staff Members' },
+  { id: 3, value: campuses.length, label: 'Campuses' },
+  { id: 4, value: new Date().getFullYear() - FOUNDED_YEAR, label: 'Years of Excellence' },
+]
+
+const container: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+}
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+}
+
+const format = (n: number) => n.toLocaleString('en-US')
+
+const Counter: React.FC<{ value: number; suffix?: string }> = ({ value, suffix = '' }) => {
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.6 })
+  const reduceMotion = useReducedMotion()
   const [count, setCount] = useState(0)
-  const ref = useRef<HTMLDivElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          observer.unobserve(ref.current!)
-        }
-      },
-      { threshold: 0.3 }
-    )
+    if (!inView || reduceMotion) return
+    const controls = animate(0, value, {
+      duration: 1.8,
+      ease: 'easeOut',
+      onUpdate: (latest) => setCount(Math.round(latest)),
+    })
+    return () => controls.stop()
+  }, [inView, reduceMotion, value])
 
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    if (!isVisible) return
-
-    let animationFrameId: number
-    // const startValue = 0
-    const endValue = value
-    const duration = 2000 // 2 seconds
-    const startTime = Date.now()
-
-    const animate = () => {
-      const now = Date.now()
-      const elapsed = now - startTime
-      const progress = Math.min(elapsed / duration, 1)
-
-      const currentValue = Math.floor(progress * endValue)
-      setCount(currentValue)
-
-      if (progress < 1) {
-        animationFrameId = requestAnimationFrame(animate)
-      }
-    }
-
-    animationFrameId = requestAnimationFrame(animate)
-
-    return () => cancelAnimationFrame(animationFrameId)
-  }, [isVisible, value])
+  const shown = reduceMotion ? value : count
 
   return (
-    <div ref={ref} className="text-5xl lg:text-6xl font-bold text-white">
-      {count}
-      <span className="text-4xl lg:text-5xl">{suffix}</span>
-    </div>
+    <span ref={ref} className="block text-3xl font-medium text-white sm:text-4xl">
+      {/* Screen readers get the final number, not every step of the count */}
+      <span className="sr-only">
+        {format(value)}
+        {suffix}
+      </span>
+      <span aria-hidden="true">
+        {format(shown)}
+        {suffix}
+      </span>
+    </span>
   )
 }
 
 export const Journey: React.FC<JourneyProps> = ({
-  stats = [
-    {
-      id: 1,
-      value: 1500,
-      suffix: '',
-      label: 'Total Students',
-    },
-    {
-      id: 2,
-      value: 200,
-      suffix: '+',
-      label: 'Total Teachers',
-    },
-    {
-      id: 3,
-      value: 800,
-      suffix: '+',
-      label: 'Total Parents',
-    },
-    {
-      id: 4,
-      value: 10,
-      suffix: '+',
-      label: 'Years of Institute',
-    },
-  ],
+  stats = defaultStats,
   title = 'Our Journey of Growth, Excellence, and Unmatched Educational Impact',
-}) => {
-  // Animation variants
-  const containerVariants:Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  }
-
-  const titleVariants:Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-      },
-    },
-  }
-
-  const cardVariants:Variants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut',
-      },
-    },
-    hover: {
-      scale: 1.05,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  }
-
-  return (
-    <section className="relative py-16 lg:py-24  overflow-hidden">
-      {/* Gradient Background */}
-      <div
-        className="absolute inset-0 rounded-[40px]  md:mx-20 mx-6 my-8 lg:my-12"
-        style={{
-          background: 'linear-gradient(135deg, #8B1C1C 0%, #1B4D2B 100%)',
-        }}
-      />
-
-      {/* Decorative elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl" />
-      </div>
-
-      <div className="px-20 px-4  relative z-10">
-        <motion.div
-          className="text-center"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+}) => (
+  <MotionConfig reducedMotion="user">
+    <section className="px-4 sm:px-6 bg-cream py-10 md:px-10">
+      <motion.div
+        className="mx-auto max-w-6xl rounded-3xl bg-linear-to-br from-[#6e1212] via-[#4a1c16] to-[#14442b] px-4 py-10 sm:px-8 lg:py-12"
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <motion.h2
+          variants={item}
+          className="mx-auto max-w-3xl text-balance text-center text-xl font-semibold leading-snug text-white sm:text-2xl"
         >
-          {/* Heading */}
-          <motion.h2
-            variants={titleVariants}
-            className="text-3xl lg:text-3xl font-bold text-white mb-12 lg:mb-16 leading-tight"
-          >
-            {title.split(' ').map((word, index) => {
-              let textColor = 'text-white'
-              if (
-                word === 'Growth,' ||
-                word === 'Excellence,' ||
-                word === 'Educational'
-              ) {
-                textColor = 'text-gray-300'
-              }
-              return (
-                <span key={index} className={textColor}>
-                  {word}{' '}
-                </span>
-              )
-            })}
-          </motion.h2>
+          {title}
+        </motion.h2>
 
-          {/* Stats Grid */}
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-4 lg:gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            {stats.map((stat) => (
-              <motion.div
-                key={stat.id}
-                variants={cardVariants}
-                whileHover="hover"
-               className="relative rounded-[25px] p-6 lg:p-8 backdrop-blur-md hover:backdrop-blur-lg transition-all duration-300 cursor-default overflow-hidden group"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.08)',
-                  borderTop: '1.5px solid rgba(255, 255, 255, 0.4)',
-                  borderLeft: '1.5px solid rgba(255, 255, 255, 0.3)',
-                  borderRight: '1px solid rgba(255, 255, 255, 0.15)',
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.15)',
-                  boxShadow: 'inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(0, 0, 0, 0.1)',
-                }}
-              
-              >
-                {/* Counter */}
-                <Counter value={stat.value} suffix={stat.suffix} />
-
-                {/* Label */}
-                <p className="text-white text-sm lg:text-base font-medium tracking-widest uppercase mt-4">
-                  {stat.label}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </div>
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          {stats.map((stat) => (
+            <motion.div
+              key={stat.id}
+              variants={item}
+              className="rounded-xl border border-white/15 bg-white/10 px-4 py-6 text-center backdrop-blur-sm"
+            >
+              <Counter value={stat.value} suffix={stat.suffix} />
+              <p className="mt-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">
+                {stat.label}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
     </section>
-  )
-}
+  </MotionConfig>
+)
 
 export default Journey

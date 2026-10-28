@@ -95,7 +95,7 @@ const staggerContainer = {
 
 export default function WhyChoose() {
   return (
-    <section className="relative bg-[#fffdfd] py-16 overflow-hidden">
+    <section className="relative bg-cream py-16 overflow-hidden">
       {/* Decorative Background */}
 
       <div className="absolute right-0 top-0 w-[500px] h-full bg-gray-50 rotate-12 opacity-50" />

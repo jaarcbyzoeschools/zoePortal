@@ -65,7 +65,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
 
   return (
     <section
-      className={`relative overflow-x-clip bg-[#FDFAFA] pt-28 pb-14 lg:pt-36 lg:pb-20 ${className}`}
+      className={`relative overflow-x-clip bg-cream pt-28 pb-14 lg:pt-36 lg:pb-20 ${className}`}
     >
       {showDecor && (
         <>
