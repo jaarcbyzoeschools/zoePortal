@@ -23,6 +23,7 @@ import { Contact } from './pages/public/Contact'
 import NewsArticle from './pages/public/NewsArticle'
 import Events from './pages/public/Events'
 import EventDetail from './pages/public/EventDetail'
+import Policy from './pages/public/Policy'
 // import StudentGrades from '@pages/student/Grades'
 // import StudentSettings from '@pages/student/Settings'
 
@@ -83,6 +84,11 @@ export const App: React.FC = () => {
           <Route path="/news/:slug" element={<NewsArticle />} />
           <Route path="/events" element={<Events />} />
           <Route path="/events/:id" element={<EventDetail />} />
+          <Route path="/policy" element={<Policy />} />
+
+        <Route path="*" element={<NotFound />} />
+
+          
 
 
 
@@ -143,7 +149,6 @@ export const App: React.FC = () => {
         {/* Errors */}
         <Route path={ROUTES.UNAUTHORIZED} element={<Unauthorized />} />
         <Route path={ROUTES.ERROR} element={<ServerError />} />
-        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )

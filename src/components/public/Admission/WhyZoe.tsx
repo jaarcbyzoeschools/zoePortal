@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { CircleCheckBig } from "lucide-react";
 import type { Variants } from "framer-motion";
+import SectionHeading from "@/components/common/SectionHeading";
 
 import FeatureCard from "./FeatureCard";
 
@@ -108,7 +109,7 @@ export default function WhyChoose() {
           transition={{ duration: 0.6 }}
           className="text-center text-3xl font-bold text-[#202020] mb-10"
         >
-          Why Choose Zoe Schools?
+        <SectionHeading align="center" title="Why Choose" highlight="Zoe Schools" />
         </motion.h2>
 
         {/* FEATURES */}

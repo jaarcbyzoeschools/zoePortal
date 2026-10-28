@@ -243,7 +243,7 @@ export const Footer: React.FC<FooterProps> = ({
           <div className="mt-12 flex flex-col items-center justify-between gap-3 rounded-3xl border border-gray-300/80 px-6 py-4 text-xs text-gray-600 md:flex-row md:rounded-full lg:mt-14">
             <p>© {new Date().getFullYear()} Zoe Schools, Ogbomoso. Built by JaarcTechsphere.</p>
             <div className="flex gap-5">
-              <Link to="/privacy" className="transition-colors hover:text-accent">
+              <Link to="/policy" className="transition-colors hover:text-accent">
                 Privacy Policy
               </Link>
               <Link to="/terms" className="transition-colors hover:text-accent">

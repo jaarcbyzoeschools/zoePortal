@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import SectionHeading from "@/components/common/SectionHeading";
 
 interface Campus {
   id: number;
@@ -100,9 +101,8 @@ export default function Campuses(){
           }}
           className="text-center mb-14"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-[#17213d]">
-            Our Campuses
-          </h2>
+                  <SectionHeading align="center" title="Our" highlight="Campuses" />
+          
 
           <p className="text-gray-500 mt-3">
             Discover our vibrant learning environments.
