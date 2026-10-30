@@ -21,12 +21,7 @@
   /* Custom Spacing
      Note: these names can override max-w-sm / w-md etc.
      If a container looks too narrow, use max-w-[28rem] or rename these. */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
+
 
   /* Custom Font Sizes (with line-heights) */
   --text-xs: 0.75rem;

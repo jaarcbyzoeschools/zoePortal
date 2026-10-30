@@ -16,13 +16,21 @@ export const CONTACT = {
 
 export const SUBJECTS = [
   'Admission enquiry',
-  'School tour request',
+  'Event registration',
   'Fees & payments',
   'Careers',
   'General enquiry',
 ]
 
+export const TOUR = {
+  duration: '45 minutes',
+  days: 'Monday to Friday',
+  slots: ['09:00', '10:30', '12:00', '14:00'],
+  defaultTime: '10:30',
+  visitors: ['1 adult', '1 adult, 1 child', '2 adults', '2 adults, 1 child', '2 adults, 2 children', '3 or more people'],
+  defaultVisitors: '2 adults, 1 child',
+  confirmationNote: 'Our team will confirm your booking by phone or email within 24 hours.',
+}
 export const telHref = (phone: string) => `tel:${phone.replace(/\s/g, '')}`
-
 export const directionsUrl = (query: string) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`

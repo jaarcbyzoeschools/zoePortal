@@ -20,10 +20,28 @@ export const NewsSection: React.FC = () => {
     : 'all'
 
   // The featured story has its own spot at the top, so it's left out of the grid
+   const query = (params.get('q') ?? '').trim().toLowerCase()
+
+  // The featured story has its own spot at the top, unless the visitor is searching
   const list = useMemo(
-    () => sortedArticles.filter((a) => !a.featured && (filter === 'all' || a.category === filter)),
-    [filter],
+    () =>
+      sortedArticles.filter((a) => {
+        if (a.featured && !query) return false
+        if (filter !== 'all' && a.category !== filter) return false
+        if (!query) return true
+        return `${a.title} ${a.excerpt} ${a.tag} ${(a.tags ?? []).join(' ')}`
+          .toLowerCase()
+          .includes(query)
+      }),
+    [filter, query],
   )
+
+  const clearSearch = () => {
+    const p = new URLSearchParams(params)
+    p.delete('q')
+    p.delete('page')
+    setParams(p, { replace: true })
+  }
 
   const totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE))
   const page = Math.min(Math.max(Number(params.get('page')) || 1, 1), totalPages)
@@ -62,6 +80,15 @@ export const NewsSection: React.FC = () => {
             label="Filter stories by category"
           />
         </div>
+
+                {query && (
+          <p className="mt-8 text-center text-sm text-gray-600">
+            {list.length} {list.length === 1 ? 'result' : 'results'} for “{params.get('q')}”{' '}
+            <button type="button" onClick={clearSearch} className="font-medium text-accent hover:underline">
+              Clear
+            </button>
+          </p>
+        )}
 
         {visible.length > 0 ? (
           <div

@@ -21,3 +21,5 @@ export const dateRangeLabel = (date: string, endDate?: string) => {
     ? `${format(start, 'MMM d')} – ${format(end, 'd, yyyy')}`
     : `${format(start, 'MMM d')} – ${format(end, 'MMM d, yyyy')}`
 }
+/** A moment in Nigerian time (WAT), whatever the visitor's own time zone. */
+export const lagosDate = (date: string, time = '00:00') => new Date(`${date}T${time}:00+01:00`)

@@ -16,3 +16,5 @@ export const campuses: Campus[] = [
   { id: 7, name: 'Citadel of Praise', address: 'California Area, Ogbomoso', phone: '+234 800 000 0000' },
   { id: 8, name: 'Citadel of Glory 2', address: 'Mooro, Iresa Road', phone: '+234 800 000 0000' },
 ]
+
+export const campusLabel = (c: Campus) => `${c.name} — ${c.address.split(',')[0]}`

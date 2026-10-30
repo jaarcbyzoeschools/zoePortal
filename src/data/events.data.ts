@@ -1,20 +1,50 @@
-import { formatTime, isPast } from '@/lib/dates'
+import { dateRangeLabel, formatTime, isPast, lagosDate } from '@/lib/dates'
 import type { ArticleBlock } from '@/data/news.data'
 
 export type EventCategory = 'Calendar' | 'Admission' | 'Sports' | 'Celebration' | 'Academics'
 
+export interface EventProgrammeItem {
+  /** 24-hour 'HH:mm' */
+  time: string
+  title: string
+  description?: string
+}
+
 export interface SchoolEvent {
+  /** Also the page URL: /events/<id>. Don't rename once links are shared. */
   id: string
   title: string
+  /** 'YYYY-MM-DD' */
   date: string
+  /** Last day, for multi-day events */
   endDate?: string
   allDay?: boolean
+  /** 24-hour 'HH:mm' */
   startTime?: string
   endTime?: string
+  /** Short place name used on cards */
   location: string
   category: EventCategory
+  /** One or two sentences, used on cards and in the calendar entry */
   summary: string
+  /** Cloudinary link. Leave out to show the placeholder tile. */
   cover?: string
+  /** Small grey pills next to the category, e.g. 'Free entry' */
+  tags?: string[]
+  /** Who the event is for */
+  audience?: string
+  /** A specific place: adds the map card and the directions link */
+  venue?: { name: string; address: string }
+  /** Shows the "Register to Attend" button */
+  registration?: boolean
+  /** Name on the organiser card. Defaults to "Admissions Office". */
+  organiser?: string
+  /** "About this event" paragraphs. Falls back to the summary. */
+  about?: string[]
+  programme?: EventProgrammeItem[]
+  /** "What to bring" checklist */
+  bring?: string[]
+  /** Optional free-form content shown after the sections above */
   body?: ArticleBlock[]
 }
 
@@ -57,12 +87,24 @@ export const events: SchoolEvent[] = [
     location: 'Citadel of Joy, Orogun',
     category: 'Admission',
     summary: 'Tour the campus, meet our teachers and learn how admission works for 2026/2027.',
-    body: [
-      { type: 'p', text: 'Placeholder: parents and prospective pupils are invited to see Zoe Schools first-hand. Walk through the classrooms, ICT lab and play areas, and speak directly with our teachers and admissions team.' },
-      { type: 'h2', text: 'What to expect' },
-      { type: 'p', text: 'Placeholder: a guided tour, a short presentation on our curriculum, and time for your questions. Light refreshments will be available.' },
-      { type: 'h2', text: 'What to bring' },
-      { type: 'p', text: 'Placeholder: your child’s most recent report card (if available) and any questions you would like answered.' },
+    tags: ['Free entry'],
+    audience: 'Parents, guardians & prospective pupils',
+    venue: { name: 'Citadel of Joy', address: 'Orogun, Along Iresa Road' },
+    registration: true,
+    about: [
+      'Come and experience Zoe Schools for yourself. Our Open Day is the best way to see our classrooms, ICT and robotics lab, boarding house and sports facilities, meet our teachers and get your questions about admission answered on the spot.',
+    ],
+    programme: [
+      { time: '10:00', title: 'Welcome & introduction', description: 'Meet the Proprietor and Director of Studies.' },
+      { time: '10:30', title: 'Guided campus tour', description: 'Classrooms, ICT lab, library and boarding facilities.' },
+      { time: '11:30', title: 'Live class demos', description: 'Abacus maths, coding and robotics in action.' },
+      { time: '12:30', title: 'Admission desk & Q&A', description: 'Fees, exam dates, transport and boarding.' },
+      { time: '13:30', title: 'Refreshments', description: 'Light refreshments for families.' },
+    ],
+    bring: [
+      'Your child (they’ll love the robotics demo!)',
+      'Questions about admission and fees',
+      'Last school report, if you plan to apply on the day',
     ],
   },
   {
@@ -74,6 +116,7 @@ export const events: SchoolEvent[] = [
     location: 'Citadel of Peace, Isale General',
     category: 'Admission',
     summary: 'Entrance examination for prospective pupils applying for the 2026/2027 session.',
+    venue: { name: 'Citadel of Peace', address: 'Isale General' },
   },
   {
     id: 'inter-house-sports',
@@ -84,10 +127,17 @@ export const events: SchoolEvent[] = [
     location: 'Citadel of Glory 1, Mooro',
     category: 'Sports',
     summary: 'A full day of track and field events, team games and house pride.',
-    body: [
-      { type: 'p', text: 'Placeholder: the four houses compete in track and field events, relays and team games. Parents and guardians are welcome to cheer from the stands.' },
-      { type: 'h2', text: 'Programme' },
-      { type: 'p', text: 'Placeholder: march-past and opening at 8:00 AM, track events through the morning, team games after lunch, and prize presentation at the close of the day.' },
+    audience: 'Pupils, parents & guardians',
+    venue: { name: 'Citadel of Glory 1', address: 'Mooro, Iresa Road' },
+    about: [
+      'Placeholder: the four houses compete in track and field events, relays and team games. Parents and guardians are welcome to cheer from the stands.',
+    ],
+    programme: [
+      { time: '08:00', title: 'March-past and opening' },
+      { time: '09:00', title: 'Track and field events' },
+      { time: '12:30', title: 'Lunch break' },
+      { time: '13:30', title: 'Relays and team games' },
+      { time: '15:30', title: 'Prize presentation' },
     ],
   },
   {
@@ -109,8 +159,9 @@ export const events: SchoolEvent[] = [
     location: 'Citadel of Peace, Isale General',
     category: 'Celebration',
     summary: 'An evening of carols, performances and awards for outstanding pupils.',
-    body: [
-      { type: 'p', text: 'Placeholder: join us to celebrate the term with carols, drama and music from our pupils, followed by the presentation of prizes for academic and character excellence.' },
+    venue: { name: 'Citadel of Peace', address: 'Isale General' },
+    about: [
+      'Placeholder: join us to celebrate the term with carols, drama and music from our pupils, followed by the presentation of prizes for academic and character excellence.',
     ],
   },
   {
@@ -140,4 +191,19 @@ export const getPastEvents = () =>
 export const eventTimeLabel = (e: SchoolEvent) => {
   if (e.allDay || !e.startTime) return 'All day'
   return e.endTime ? `${formatTime(e.startTime)} - ${formatTime(e.endTime)}` : formatTime(e.startTime)
+}
+
+/** When the event starts and ends, in Nigerian time. */
+export const eventStart = (e: SchoolEvent) =>
+  lagosDate(e.date, e.allDay ? '00:00' : (e.startTime ?? '00:00'))
+export const eventEnd = (e: SchoolEvent) =>
+  lagosDate(lastDay(e), e.allDay ? '23:59' : (e.endTime ?? '23:59'))
+
+/** Link to the contact form with the subject and message already filled in. */
+export const registrationHref = (e: SchoolEvent) => {
+  const params = new URLSearchParams({
+    subject: 'Event registration',
+    message: `Hello, I would like to register for "${e.title}" on ${dateRangeLabel(e.date, e.endDate)}.\n\nNumber of people attending: `,
+  })
+  return `/contact?${params.toString()}#contact-form`
 }

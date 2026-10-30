@@ -29,6 +29,7 @@ type FormValues = z.infer<typeof schema>
 
 export interface SubjectRequest {
   subject: string
+  message?: string
   /** Changes on every request so repeated clicks still apply */
   nonce: number
 }
@@ -94,7 +95,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({ subjectRequest }) => {
 
   // "Book a School Tour" pre-selects the subject
   useEffect(() => {
-    if (subjectRequest) setValue('subject', subjectRequest.subject)
+    if (!subjectRequest) return
+    setValue('subject', subjectRequest.subject)
+    if (subjectRequest.message) setValue('message', subjectRequest.message)
   }, [subjectRequest, setValue])
 
   const onSubmit = async (values: FormValues) => {
